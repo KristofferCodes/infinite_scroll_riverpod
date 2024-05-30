@@ -30,6 +30,8 @@ class PokemonListTile extends ConsumerWidget {
                 backgroundImage: NetworkImage(pokemon.sprites!.frontDefault!),
               )
             : CircleAvatar(),
+        trailing: IconButton(
+            onPressed: () {}, icon: Icon(Icons.favorite_border_rounded)),
         title: Text(pokemon != null
             ? pokemon.name!.toUpperCase()
             : "currently loading name for pokemon"),
