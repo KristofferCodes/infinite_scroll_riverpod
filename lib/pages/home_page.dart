@@ -99,13 +99,21 @@ class _HomePageState extends ConsumerState<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     if (_favouritePokemons.isNotEmpty)
-                    SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.48,
-                      child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemCount: _favouritePokemons.length,itemBuilder: (context, index){
-                        String pokemonUrl = _favouritePokemons[index];
-                        return PokemonCard(pokemonUrl: pokemonUrl,);
-                      }),
-                    ),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.48,
+                        child: GridView.builder(
+                            scrollDirection: Axis.horizontal,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: _favouritePokemons.length,
+                            itemBuilder: (context, index) {
+                              String pokemonUrl = _favouritePokemons[index];
+                              return PokemonCard(
+                                pokemonUrl: pokemonUrl,
+                              );
+                            }),
+                      ),
                     if (_favouritePokemons.isEmpty)
                       const Text('No favourite pokemons yet!')
                   ]))
