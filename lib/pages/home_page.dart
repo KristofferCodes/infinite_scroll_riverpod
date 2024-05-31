@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_riverpod/controllers/home_page_controller.dart';
 import 'package:infinite_scroll_riverpod/models/page_data.dart';
 import 'package:infinite_scroll_riverpod/providers/pokemon_data_providers.dart';
+import 'package:infinite_scroll_riverpod/widgets/pokemon_card.dart';
 import 'package:infinite_scroll_riverpod/widgets/pokemon_list_tile.dart';
 
 import '../models/pokemon.dart';
@@ -100,8 +101,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                     if (_favouritePokemons.isNotEmpty)
                     SizedBox(
                       height: MediaQuery.sizeOf(context).height * 0.48,
-                      child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemBuilder: (context, index){
-                        return Container();
+                      child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemCount: _favouritePokemons.length,itemBuilder: (context, index){
+                        String pokemonUrl = _favouritePokemons[index];
+                        return PokemonCard(pokemonUrl: pokemonUrl,);
                       }),
                     ),
                     if (_favouritePokemons.isEmpty)
