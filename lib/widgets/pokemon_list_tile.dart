@@ -8,9 +8,14 @@ import '../models/pokemon.dart';
 class PokemonListTile extends ConsumerWidget {
   final String pokemonURL;
 
+  late FavouritePokemonsProvider _favouritePokemonsProvider;
+  late List<String> _favouritePokemons;
+
   PokemonListTile({required this.pokemonURL});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _favouritePokemonsProvider = ref.watch(favouritePokemonsProvider.notifier);
+    _favouritePokemons = ref.watch(favouritePokemonsProvider);
     final pokemon = ref.watch(pokemonDataProvider(pokemonURL));
     return pokemon.when(data: (data) {
       return _tile(context, false, data);
@@ -29,9 +34,18 @@ class PokemonListTile extends ConsumerWidget {
             ? CircleAvatar(
                 backgroundImage: NetworkImage(pokemon.sprites!.frontDefault!),
               )
-            : CircleAvatar(),
+            : const CircleAvatar(),
         trailing: IconButton(
-            onPressed: () {}, icon: Icon(Icons.favorite_border_rounded)),
+            onPressed: () {
+              if (_favouritePokemons.contains(pokemonURL)) {
+                _favouritePokemonsProvider.removeFavouritePokemon(pokemonURL);
+              } else {
+                _favouritePokemonsProvider.addFavouritePokemon(pokemonURL);
+              }
+            },
+            icon: Icon(_favouritePokemons.contains(pokemonURL)
+                ? Icons.favorite
+                : Icons.favorite_border_rounded)),
         title: Text(pokemon != null
             ? pokemon.name!.toUpperCase()
             : "currently loading name for pokemon"),
